@@ -21,7 +21,14 @@ class Robot:
 
         self._backend.setup()
 
-        self.power_board = PowerBoard("BEES")
+        power_boards = self._backend.power_boards()
+        if len(power_boards) == 0:
+            raise RuntimeError("There is no power board connected.")
+        elif len(power_boards) > 1:
+            raise RuntimeError("There are multiple power boards connected.")
+        (power_board_serial, power_board_backend), = power_boards.items()
+        self.power_board = PowerBoard(power_board_serial, power_board_backend)
+
         self.motor_boards = {
             serial: MotorBoard(serial, backend)
             for serial, backend in self._backend.motor_boards().items()
