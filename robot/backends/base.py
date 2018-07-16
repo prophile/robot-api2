@@ -117,7 +117,7 @@ class BaseServoAssembly(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def gpio_read_digital(self, pin: int) -> None:
+    def gpio_read_digital(self, pin: int) -> bool:
         """Read a digital value from a GPIO pin."""
         raise NotImplementedError
 

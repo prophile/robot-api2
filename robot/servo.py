@@ -22,6 +22,53 @@ class PinMode(enum.Enum):
     OUTPUT_LOW = "output_low"
 
 
+@enum.unique
+class PinValue(enum.Enum):
+    """GPIO pin value."""
+
+    HIGH = True
+    LOW = False
+
+
+class GPIOPin:
+    """An individual GPIO pin."""
+
+    def __init__(self, index: int, backend: BaseServoAssembly) -> None:
+        """
+        Construct internally.
+
+        This takes a pin index, and a backend.
+        """
+        self._index = index
+        self._backend = backend
+        self._mode = PinMode.INPUT
+
+    @property
+    def mode(self) -> PinMode:
+        """Get the pin's current mode."""
+        return self._mode
+
+    @mode.setter
+    def mode(self, new_mode: PinMode) -> None:
+        """Set the pin's mode."""
+        self._mode = new_mode
+        {
+            PinMode.INPUT: self._backend.gpio_set_input,
+            PinMode.INPUT_PULLUP: self._backend.gpio_set_input_pullup,
+            PinMode.OUTPUT_HIGH: self._backend.gpio_output_high,
+            PinMode.OUTPUT_LOW: self._backend.gpio_output_low,
+        }[new_mode](self._index)
+
+    def read(self) -> PinValue:
+        """Read the current digital value on the pin."""
+        if self._mode not in (PinMode.INPUT, PinMode.INPUT_PULLUP):
+            raise ValueError("Cannot read from this pin in output mode.")
+
+        return {False: PinValue.LOW, True: PinValue.HIGH}[
+            self._backend.gpio_read_digital(self._index)
+        ]
+
+
 class Servo:
     """An individual servo output on a servo board."""
 
