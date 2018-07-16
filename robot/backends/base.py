@@ -1,9 +1,10 @@
 """Base instances of robot backends."""
 
 import abc
-from typing import Mapping, NewType, Sequence
+from typing import Iterable, Mapping, NewType, Optional, Sequence
 
 MotorPower = NewType("MotorPower", float)
+ServoPosition = NewType("ServoPosition", int)
 
 
 class BaseMotorChannel(metaclass=abc.ABCMeta):
@@ -50,6 +51,79 @@ class BasePowerBoard(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def wait_for_start_button(self) -> None:
         """Await the start button being pressed."""
+        raise NotImplementedError
+
+
+class CommandResponse(object):
+    """A response to an Arduino command."""
+
+    def __init__(self, message: str, error: bool) -> None:
+        """Construct given whether an error, and a message."""
+        self.message = message
+        self.error = error
+
+    def __repr__(self) -> str:
+        """Reproducable representation."""
+        return "{cls}(message={message!r}, error={error!r})".format(
+            cls=type(self).__name__, message=self.message, error=self.error
+        )
+
+
+class BaseServoAssembly(metaclass=abc.ABCMeta):
+    """Abstract servo assembly implementation."""
+
+    @abc.abstractmethod
+    def direct_command(self, args: Iterable[str]) -> CommandResponse:
+        """Issue a direct, raw command."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def num_servos(self) -> int:
+        """Get the number of available servos."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def set_servo(self, servo: int, position: Optional[ServoPosition]) -> None:
+        """Set a given servo to some specified position, including undriven."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def ultrasound_pulse(self, out_pin: int, in_pin: int) -> float:
+        """
+        Trigger an ultrasound detection with a given input and output pin pair.
+
+        The time delta is returned in seconds.
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def gpio_output_high(self, pin: int) -> None:
+        """Drive a given GPIO pin to high output."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def gpio_output_low(self, pin: int) -> None:
+        """Drive a given GPIO pin to high output."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def gpio_set_input(self, pin: int) -> None:
+        """Set a given GPIO into high-impedance input mode."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def gpio_set_input_pullup(self, pin: int) -> None:
+        """Set a given GPIO into pulled-up input mode."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def gpio_read_digital(self, pin: int) -> None:
+        """Read a digital value from a GPIO pin."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def gpio_read_analogue(self, pin: int) -> float:
+        """Read an analogue value, in volts, from a given GPIO pin."""
         raise NotImplementedError
 
 
