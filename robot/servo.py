@@ -1,4 +1,5 @@
 """Front-end servo board API."""
+import enum
 import functools
 from typing import Any, Callable, Iterable, Optional
 
@@ -9,6 +10,16 @@ class CommandError(RuntimeError):
     """Error raised from a custom Arduino command."""
 
     pass
+
+
+@enum.unique
+class PinMode(enum.Enum):
+    """GPIO pin mode."""
+
+    INPUT = "input"
+    INPUT_PULLUP = "input_pullup"
+    OUTPUT_HIGH = "output_high"
+    OUTPUT_LOW = "output_low"
 
 
 class Servo:
