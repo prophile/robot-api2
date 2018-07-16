@@ -1,11 +1,8 @@
 """Robot API."""
 
-from .motor import MotorDriveState
+from .motor import MotorDriveSpecialState
 
-BRAKE = MotorDriveState.BRAKE
-COAST = MotorDriveState.COAST
+BRAKE = MotorDriveSpecialState.BRAKE
+COAST = MotorDriveSpecialState.COAST
 
-__all__ = [
-    'BRAKE',
-    'COAST',
-]
+__all__ = ["BRAKE", "COAST"]
