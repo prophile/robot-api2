@@ -39,7 +39,7 @@ class Robot:
 
     @staticmethod
     def _get_default_backend() -> BaseRobot:
-        return DummyRobot(motor_boards={}, power_boards={})
+        return DummyRobot(motor_boards={}, power_boards={}, servo_assemblies={})
 
     @property
     def motor_board(self) -> MotorBoard:

@@ -144,3 +144,8 @@ class BaseRobot(metaclass=abc.ABCMeta):
     def power_boards(self) -> Mapping[str, BasePowerBoard]:
         """Get power boards by ID."""
         raise NotImplementedError
+
+    @abc.abstractmethod
+    def servo_assemblies(self) -> Mapping[str, BaseServoAssembly]:
+        """Get servo assemblies by ID."""
+        raise NotImplementedError
