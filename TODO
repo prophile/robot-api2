@@ -1,0 +1,23 @@
+TODO:
+ - Frontend for analogue pin reading
+ - Frontend for game state
+ - Base backend for game state
+ - Dummy backend for game state
+ - Dummy backend for servo assembly
+ - Tests for game state frontend
+ - Tests for power board frontend
+ - Tests for servo assembly frontend
+ - Tests for robot initialisation
+ - Live motor board backend
+ - Tests for live motor board backend
+ - libusb wrapper
+ - Live power board backend
+ - Tests for live power board backend
+ - Live servo assembly backend
+ - Tests for live servo assembly backend
+ - Live game state backend
+ - Tests for live game state backend
+ - Final tests (to reach 100% coverage)
+ - CI integration
+ - Shipping plan
+ - Integration test
