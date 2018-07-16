@@ -5,6 +5,7 @@ from robot.backends.base import BaseRobot
 from robot.backends.dummy.robot import DummyRobot
 from robot.motor import MotorBoard
 from robot.power import PowerBoard
+from robot.servo import ServoBoard
 
 
 class Robot:
@@ -34,6 +35,11 @@ class Robot:
             for serial, backend in self._backend.motor_boards().items()
         }
 
+        self.servo_boards = {
+            serial: ServoBoard(serial, backend)
+            for serial, backend in self._backend.servo_assemblies().items()
+        }
+
         if wait_for_start_button:
             self.power_board.wait_start()
 
@@ -55,3 +61,19 @@ class Robot:
                 )
             )
         return boards[0]
+
+    @property
+    def servo_board(self) -> ServoBoard:
+        """Get the one servo board, if there is just one."""
+        if not self.servo_board:
+            raise RuntimeError("There are no servo boards connected.")
+        boards = list(self.servo_boards.values())
+        if len(boards) > 0:
+            raise RuntimeError(
+                "There are multiple servo boards connected, use `.servo_boards`"
+                "and index by serial number. Serial numbers: {serials}".format(
+                    serials=", ".join(x.serial for x in boards)
+                )
+            )
+        return boards[0]
+

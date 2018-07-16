@@ -57,13 +57,13 @@ class BasePowerBoard(metaclass=abc.ABCMeta):
 class CommandResponse(object):
     """A response to an Arduino command."""
 
-    def __init__(self, message: str, error: bool) -> None:
+    def __init__(self, message: bytes, error: bool) -> None:
         """Construct given whether an error, and a message."""
         self.message = message
         self.error = error
 
     def __repr__(self) -> str:
-        """Reproducable representation."""
+        """Reproducible representation."""
         return "{cls}(message={message!r}, error={error!r})".format(
             cls=type(self).__name__, message=self.message, error=self.error
         )
@@ -73,7 +73,7 @@ class BaseServoAssembly(metaclass=abc.ABCMeta):
     """Abstract servo assembly implementation."""
 
     @abc.abstractmethod
-    def direct_command(self, args: Iterable[str]) -> CommandResponse:
+    def direct_command(self, args: Iterable[bytes]) -> CommandResponse:
         """Issue a direct, raw command."""
         raise NotImplementedError
 
