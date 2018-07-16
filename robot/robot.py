@@ -76,4 +76,3 @@ class Robot:
                 )
             )
         return boards[0]
-

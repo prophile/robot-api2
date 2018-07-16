@@ -126,6 +126,11 @@ class BaseServoAssembly(metaclass=abc.ABCMeta):
         """Read an analogue value, in volts, from a given GPIO pin."""
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def gpio_num_pins(self) -> int:
+        """Get the number of available GPIO pins."""
+        raise NotImplementedError
+
 
 class BaseRobot(metaclass=abc.ABCMeta):
     """Abstract robot implementation."""
