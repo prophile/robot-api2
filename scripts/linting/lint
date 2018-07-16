@@ -1,0 +1,4 @@
+#!/bin/bash
+mypy --strict robot
+black --check robot
+exec flake8 robot
