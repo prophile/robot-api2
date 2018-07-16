@@ -32,7 +32,7 @@ class Robot:
 
     @staticmethod
     def _get_default_backend() -> BaseRobot:
-        return DummyRobot(motor_boards={})
+        return DummyRobot(motor_boards={}, power_boards={})
 
     @property
     def motor_board(self) -> MotorBoard:

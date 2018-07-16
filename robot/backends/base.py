@@ -46,3 +46,22 @@ class BaseRobot(metaclass=abc.ABCMeta):
     def motor_boards(self) -> Mapping[str, BaseMotorBoard]:
         """Get motor boards by ID."""
         raise NotImplementedError
+
+
+class BasePowerBoard(metaclass=abc.ABCMeta):
+    """Abstract power board implementation."""
+
+    @abc.abstractmethod
+    def enable_outputs(self) -> None:
+        """Drive the main outputs to the battery voltage."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def disable_outputs(self) -> None:
+        """Drop the main outputs back to high-impedance."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def wait_for_start_button(self) -> None:
+        """Await the start button being pressed."""
+        raise NotImplementedError
