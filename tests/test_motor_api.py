@@ -1,4 +1,4 @@
-from robot import COAST
+from robot import COAST, BRAKE
 from robot.backends.dummy import DummyMotorChannel, DummyMotorBoard
 from robot.motor import MotorBoard
 
@@ -23,3 +23,16 @@ def test_driving_forwards_on_m0():
     dummy_board_frontend, dummy_board_backend = _get_dummy_motor_board()
     dummy_board_frontend.m0 = 0.5
     assert dummy_board_backend.channels()[0].output == 0.5
+
+
+def test_driving_forwards_then_coasting_on_m1():
+    dummy_board_frontend, dummy_board_backend = _get_dummy_motor_board()
+    dummy_board_frontend.m1 = 1.0
+    dummy_board_frontend.m1 = COAST
+    assert dummy_board_backend.channels()[1].output == 0.0
+
+
+def test_braking_on_m1():
+    dummy_board_frontend, dummy_board_backend = _get_dummy_motor_board()
+    dummy_board_frontend.m1 = BRAKE
+    assert dummy_board_backend.channels()[1].output is None
