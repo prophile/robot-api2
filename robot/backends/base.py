@@ -1,7 +1,7 @@
 """Base instances of robot backends."""
 
 import abc
-from typing import NewType, Sequence
+from typing import Mapping, NewType, Sequence
 
 MotorPower = NewType("MotorPower", float)
 
@@ -31,4 +31,18 @@ class BaseMotorBoard(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def channels(self) -> Sequence[BaseMotorChannel]:
         """Get all channels of this motor board."""
+        raise NotImplementedError
+
+
+class BaseRobot(metaclass=abc.ABCMeta):
+    """Abstract robot implementation."""
+
+    @abc.abstractmethod
+    def setup(self) -> None:
+        """Make all connections and start running."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def motor_boards(self) -> Mapping[str, BaseMotorBoard]:
+        """Get motor boards by ID."""
         raise NotImplementedError
