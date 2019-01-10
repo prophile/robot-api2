@@ -1,6 +1,5 @@
 TODO:
  - Add support for non-numerical pin indices, eg A0
- - Dummy backend for servo assembly
  - Tests for game state frontend
  - Tests for power board frontend
  - Tests for servo assembly frontend

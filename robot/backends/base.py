@@ -104,7 +104,7 @@ class BaseServoAssembly(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def gpio_output_low(self, pin: int) -> None:
-        """Drive a given GPIO pin to high output."""
+        """Drive a given GPIO pin to low output."""
         raise NotImplementedError
 
     @abc.abstractmethod
