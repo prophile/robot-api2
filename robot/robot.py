@@ -1,11 +1,12 @@
 """Central 'robot' class frontend definition."""
 from typing import Optional
 
-from robot.backends.base import BaseRobot
+from robot.backends.base import BaseRobot, GameMode
 from robot.backends.dummy.robot import DummyRobot
 from robot.motor import MotorBoard
 from robot.power import PowerBoard
 from robot.servo import ServoBoard
+from robot.game_state import GameState
 
 
 class Robot:
@@ -39,6 +40,8 @@ class Robot:
             serial: ServoBoard(serial, backend)
             for serial, backend in self._backend.servo_assemblies().items()
         }
+
+        self.game_state = GameState(self._backend.game_state())
 
         if wait_for_start_button:
             self.power_board.wait_start()
@@ -76,3 +79,13 @@ class Robot:
                 )
             )
         return boards[0]
+
+    @property
+    def mode(self) -> GameMode:
+        """Get the gamemode."""
+        return self.game_state.mode
+
+    @property
+    def zone(self) -> int:
+        """Get the zone."""
+        return self.game_state.zone

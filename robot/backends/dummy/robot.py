@@ -6,7 +6,10 @@ from robot.backends.base import (
     BasePowerBoard,
     BaseRobot,
     BaseServoAssembly,
+    BaseGameState,
 )
+
+from .game_state import DummyGameState
 
 
 class DummyRobot(BaseRobot):
@@ -17,12 +20,13 @@ class DummyRobot(BaseRobot):
         *,
         motor_boards: Mapping[str, BaseMotorBoard],
         power_boards: Mapping[str, BasePowerBoard],
-        servo_assemblies: Mapping[str, BaseServoAssembly]
+        servo_assemblies: Mapping[str, BaseServoAssembly],
     ) -> None:
         """Construct given pre-set dicts of boards."""
         self._motor_boards = dict(motor_boards)
         self._power_boards = dict(power_boards)
         self._servo_assemblies = dict(servo_assemblies)
+        self._game_state = DummyGameState()
 
     def setup(self) -> None:
         """Null setup."""
@@ -39,3 +43,7 @@ class DummyRobot(BaseRobot):
     def servo_assemblies(self) -> Mapping[str, BaseServoAssembly]:
         """Get all servo assemblies."""
         return self._servo_assemblies
+
+    def game_state(self) -> BaseGameState:
+        """Get the game state."""
+        return self._game_state

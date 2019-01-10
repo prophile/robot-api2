@@ -1,6 +1,7 @@
 """Base instances of robot backends."""
 
 import abc
+import enum
 from typing import Iterable, Mapping, NewType, Optional, Sequence
 
 MotorPower = NewType("MotorPower", float)
@@ -137,6 +138,28 @@ class BaseServoAssembly(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
 
+@enum.unique
+class GameMode(enum.Enum):
+    """Robot Game Mode."""
+
+    DEVELOPMENT = "development"
+    COMPETITION = "competition"
+
+
+class BaseGameState(metaclass=abc.ABCMeta):
+    """Abstract game state implementation."""
+
+    @abc.abstractmethod
+    def gamemode_read(self) -> GameMode:
+        """Get the current game mode."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def zone_read(self) -> int:
+        """Get the current zone."""
+        raise NotImplementedError
+
+
 class BaseRobot(metaclass=abc.ABCMeta):
     """Abstract robot implementation."""
 
@@ -158,4 +181,9 @@ class BaseRobot(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def servo_assemblies(self) -> Mapping[str, BaseServoAssembly]:
         """Get servo assemblies by ID."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def game_state(self) -> BaseGameState:
+        """Get the game state."""
         raise NotImplementedError
