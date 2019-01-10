@@ -68,6 +68,16 @@ class GPIOPin:
             self._backend.gpio_read_digital(self._index)
         ]
 
+    def read_analogue(self) -> float:
+        """Read the current analogue value on the pin, in volts."""
+        if self._mode not in (PinMode.INPUT, PinMode.INPUT_PULLUP):
+            raise ValueError("Cannot read from this pin in output mode.")
+
+        if not self._backend.gpio_can_read_analogue(self._index):
+            raise ValueError("This pin does not support analogue read.")
+
+        return self._backend.gpio_read_analogue(self._index)
+
 
 class Servo:
     """An individual servo output on a servo board."""

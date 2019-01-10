@@ -122,6 +122,11 @@ class BaseServoAssembly(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def gpio_can_read_analogue(self, pin: int) -> bool:
+        """Check if a given GPIO can be used for ADC input."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def gpio_read_analogue(self, pin: int) -> float:
         """Read an analogue value, in volts, from a given GPIO pin."""
         raise NotImplementedError

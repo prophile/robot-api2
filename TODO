@@ -1,5 +1,5 @@
 TODO:
- - Frontend for analogue pin reading
+ - Add support for non-numerical pin indices, eg A0
  - Frontend for game state
  - Base backend for game state
  - Dummy backend for game state
@@ -21,3 +21,5 @@ TODO:
  - CI integration
  - Shipping plan
  - Integration test
+ 
+ - PWM Support
