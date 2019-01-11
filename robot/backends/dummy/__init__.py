@@ -4,6 +4,7 @@ from .motor import DummyMotorBoard, DummyMotorChannel
 from .game_state import DummyGameState
 from .power import DummyPowerBoard
 from .servo import DummyServoAssembly
+from .robot import DummyRobot
 
 __all__ = [
     "DummyMotorBoard",
@@ -11,4 +12,5 @@ __all__ = [
     "DummyGameState",
     "DummyPowerBoard",
     "DummyServoAssembly",
+    "DummyRobot",
 ]

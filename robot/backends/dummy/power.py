@@ -8,6 +8,7 @@ class DummyPowerBoard(BasePowerBoard):
     def __init__(self) -> None:
         """Initialise, with outputs disabled."""
         self.outputs = False
+        self._waited_for_start = False
 
     def enable_outputs(self) -> None:
         """Drive the outputs to high."""
@@ -18,5 +19,5 @@ class DummyPowerBoard(BasePowerBoard):
         self.outputs = False
 
     def wait_for_start_button(self) -> None:
-        """Do nothing in testing."""
-        pass
+        """Mark as waited for testing."""
+        self._waited_for_start = True

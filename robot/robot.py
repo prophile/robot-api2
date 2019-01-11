@@ -56,7 +56,7 @@ class Robot:
         if not self.motor_boards:
             raise RuntimeError("There are no motor boards connected.")
         boards = list(self.motor_boards.values())
-        if len(boards) > 0:
+        if len(boards) > 1:
             raise RuntimeError(
                 "There are multiple motor boards connected, use `.motor_boards`"
                 "and index by serial number. Serial numbers: {serials}".format(
@@ -68,10 +68,10 @@ class Robot:
     @property
     def servo_board(self) -> ServoBoard:
         """Get the one servo board, if there is just one."""
-        if not self.servo_board:
+        if not self.servo_boards:
             raise RuntimeError("There are no servo boards connected.")
         boards = list(self.servo_boards.values())
-        if len(boards) > 0:
+        if len(boards) > 1:
             raise RuntimeError(
                 "There are multiple servo boards connected, use `.servo_boards`"
                 "and index by serial number. Serial numbers: {serials}".format(

@@ -28,9 +28,11 @@ class DummyRobot(BaseRobot):
         self._servo_assemblies = dict(servo_assemblies)
         self._game_state = DummyGameState()
 
+        self._setup_complete = False
+
     def setup(self) -> None:
-        """Null setup."""
-        pass
+        """Mark setup as complete."""
+        self._setup_complete = True
 
     def motor_boards(self) -> Mapping[str, BaseMotorBoard]:
         """Get all motor boards."""
