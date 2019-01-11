@@ -120,7 +120,12 @@ class ServoBoard:
 
         self.servos = [
             Servo(drive=functools.partial(self._set_servo, n), initial_position=None)
-            for n in range(self._backend.num_servos())
+            for n in range(self._num_servos)
+        ]
+
+        self.pins = [
+            GPIOPin(n, backend)
+            for n in range(self._num_pins)
         ]
 
     def _set_servo(self, index: int, value: float) -> None:
@@ -129,10 +134,8 @@ class ServoBoard:
                 "Servo ranges are from -1 to 1 (given: {value})".format(value=value)
             )
         mapped_value = int(value * 50.0 + 50.5)
-        # Numerical edge cases
-        if mapped_value < 0:
-            mapped_value = 0
-        elif mapped_value >= 100:
+        # Numerical edge case
+        if mapped_value >= 100:
             mapped_value = 100
         self._backend.set_servo(index, ServoPosition(mapped_value))
 

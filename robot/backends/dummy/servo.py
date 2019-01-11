@@ -32,10 +32,14 @@ class DummyServoAssembly(BaseServoAssembly):
         We are going to return the joined arguments.
         The error flag is set if the first byte is b'e'
         """
-        data = b''.join(args)
-        error_flag = data[0] == b'e'
+        data = ''.join(map(lambda x: x.decode('utf-8'), args))
+        error_flag = data[0] == 'e'
 
-        return CommandResponse(data, error_flag)
+        return CommandResponse(data.encode(), error_flag)
+
+    def num_servos(self) -> int:
+        """Get the number of available servos."""
+        return self._num_servos
 
     def set_servo(self, servo: int, position: Optional[ServoPosition]) -> None:
         """Set a given servo to some specified position, including undriven."""
@@ -48,12 +52,6 @@ class DummyServoAssembly(BaseServoAssembly):
 
         The time delta is returned in seconds.
         """
-        if self._pins[out_pin - 1].startswith("INPUT"):
-            raise RuntimeError("The out pin is set as an input")
-
-        if not self._pins[in_pin - 1].startswith("INPUT"):
-            raise RuntimeError("The in pin is not set as an input")
-
         return randint(1, 1500) / 1000
 
     def gpio_output_high(self, pin: int) -> None:
